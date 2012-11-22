@@ -739,6 +739,9 @@ let
 
   fortune = callPackage ../tools/misc/fortune { };
 
+  fox = callPackage ../development/libraries/fox/default.nix { };
+  fox_1_6 = callPackage ../development/libraries/fox/fox-1.6.nix { };
+
   fprot = callPackage ../tools/security/fprot { };
 
   freeipmi = callPackage ../tools/system/freeipmi {};
@@ -918,6 +921,8 @@ let
 
   iasl = callPackage ../development/compilers/iasl { };
 
+  icecast = callPackage ../servers/icecast { };
+
   icoutils = callPackage ../tools/graphics/icoutils { };
 
   idutils = callPackage ../tools/misc/idutils { };
@@ -1010,6 +1015,8 @@ let
   libconfig = callPackage ../development/libraries/libconfig { };
 
   libtirpc = callPackage ../development/libraries/ti-rpc { };
+
+  libshout = callPackage ../development/libraries/libshout { };
 
   libtorrent = callPackage ../tools/networking/p2p/libtorrent { };
 
@@ -1409,6 +1416,8 @@ let
   rdiff_backup = callPackage ../tools/backup/rdiff-backup { };
 
   ripmime = callPackage ../tools/networking/ripmime {};
+
+  rng_tools = callPackage ../tools/security/rng-tools { };
 
   rsnapshot = callPackage ../tools/backup/rsnapshot {
     # For the `logger' command, we can use either `utillinux' or
@@ -5006,6 +5015,8 @@ let
 
   vtk = callPackage ../development/libraries/vtk { };
 
+  vtkWithQt4 = vtk.override { useQt4 = true; };
+
   vxl = callPackage ../development/libraries/vxl {
     libpng = libpng12;
   };
@@ -6552,7 +6563,9 @@ let
 
   aangifte2011 = callPackage_i686 ../applications/taxes/aangifte-2011 { };
 
-  abcde = callPackage ../applications/audio/abcde { };
+  abcde = callPackage ../applications/audio/abcde { 
+    inherit (perlPackages) DigestSHA MusicBrainz MusicBrainzDiscID;
+  };
 
   abiword = callPackage ../applications/office/abiword {
     inherit (gnome) libglade libgnomecanvas;
@@ -6627,6 +6640,8 @@ let
   blender = callPackage  ../applications/misc/blender {
     python = python32;
   };
+
+  bristol = callPackage ../applications/audio/bristol { };
 
   bvi = callPackage ../applications/editors/bvi { };
 
@@ -6964,6 +6979,8 @@ let
 
   fossil = callPackage ../applications/version-management/fossil { };
 
+  geany = callPackage ../applications/editors/geany { };
+
   goldendict = callPackage ../applications/misc/goldendict { };
 
   grass = import ../applications/misc/grass {
@@ -7084,6 +7101,8 @@ let
   giv = callPackage ../applications/graphics/giv {
     pcre = pcre.override { unicodeSupport = true; };
   };
+
+  gmrun = callPackage ../applications/misc/gmrun {};
 
   gnucash = callPackage ../applications/office/gnucash {
     inherit (gnome) libgnomeui libgtkhtml gtkhtml libbonoboui libgnomeprint;
@@ -7646,6 +7665,8 @@ let
 
   qsynth = callPackage ../applications/audio/qsynth { };
 
+  qtcreator = callPackage ../development/qtcreator { };
+
   qtpfsgui = callPackage ../applications/graphics/qtpfsgui { };
 
   qtractor = callPackage ../applications/audio/qtractor { };
@@ -8026,6 +8047,8 @@ let
   xdotool = callPackage ../tools/X11/xdotool { };
 
   xen = callPackage ../applications/virtualization/xen { };
+
+  xfe = callPackage ../applications/misc/xfe { };
 
   xfig = callPackage ../applications/graphics/xfig {
     stdenv = overrideGCC stdenv gcc34;
