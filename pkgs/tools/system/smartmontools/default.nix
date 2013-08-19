@@ -2,8 +2,8 @@
 
 let
   driverdb = fetchurl {
-    url = "http://smartmontools.svn.sourceforge.net/viewvc/smartmontools/trunk/smartmontools/drivedb.h?revision=3812";
-    sha256 = "1x22ammjwlb7p3cmd13shqq1payb7nr9pgfa9xifs19qyr77mrwp";
+    url = "http://sourceforge.net/p/smartmontools/code/3812/tree/trunk/smartmontools/drivedb.h?format=raw";
+    sha256 = "0dr5ggjr3w3rq40pcjd6w2977ilq4zkhx8ylnwjky94pmxwgjflg";
     name = "smartmontools-drivedb.h";
   };
 in
