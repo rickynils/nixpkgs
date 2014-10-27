@@ -1,15 +1,23 @@
-{ stdenv, fetchurl, eventlog, pkgconfig, glib, python }:
+{ stdenv, fetchurl, eventlog, pkgconfig, glib, python, systemd, perl
+, riemann_c_client, protobufc, yacc }:
 
-stdenv.mkDerivation {
-  name = "syslog-ng-3.5.3";
+stdenv.mkDerivation rec {
+  name = "syslog-ng-${version}";
+
+  version = "3.6.1";
 
   src = fetchurl {
-    url = "http://www.balabit.com/downloads/files?path=/syslog-ng/sources/3.5.3/source/syslog-ng_3.5.3.tar.gz";
-    sha256 = "1l3424qn9bf9z742pqba8x3dj7g729asimmhlizv1rvjlaxa2jd3";
+    url = "http://www.balabit.com/downloads/files?path=/syslog-ng/sources/${version}/source/syslog-ng_${version}.tar.gz";
+    sha256 = "1s3lsxk2pky3jkfamkw5ivpxq2kazikcvdgpmxiyn5w10dwkd0m7";
   };
 
-  buildInputs = [ eventlog pkgconfig glib python ];
-  configureFlags = "--enable-dynamic-linking";
+  buildInputs = [ eventlog pkgconfig glib python systemd perl riemann_c_client protobufc yacc ];
+
+  configureFlags = [
+    "--enable-dynamic-linking"
+    "--enable-systemd"
+    "--with-systemdsystemunitdir=$(out)/etc/systemd/system"
+  ];
 
   meta = {
     homepage = "http://www.balabit.com/network-security/syslog-ng/";
