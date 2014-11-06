@@ -3,12 +3,13 @@
 
 stdenv.mkDerivation rec {
   name = "syslog-ng-incubator-${version}";
+  version = "141106-54179c5";
 
-  version = "0.3.1";
-
-  src = fetchurl {
-    url = "https://github.com/balabit/syslog-ng-incubator/archive/${name}.tar.gz";
-    sha256 = "0zr0vlp7cq3qfhqhalf7rdyd54skswxnc9j9wi8sfmz3psy3vd4y";
+  src = fetchFromGitHub {
+    owner = "balabit";
+    repo = "syslog-ng-incubator";
+    rev = "54179c5f733487fe97ee856bc27130d0b09f3d5a";
+    sha256 = "1y099f7pdan1441ycycd67igcwbla2m2cgnxjfvdw76llvi35sam";
   };
 
   buildInputs = [
@@ -20,7 +21,6 @@ stdenv.mkDerivation rec {
 
   configureFlags = [
     "--without-ivykis"
-    "--with-riemann"
     "--with-module-dir=$(out)/lib/syslog-ng"
   ];
 
