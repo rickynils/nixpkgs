@@ -2,7 +2,7 @@
 , pkgconfig ? null, gt68xxFirmware ? null, snapscanFirmware ? null
 }:
 
-assert hotplugSupport -> (stdenv.system == "i686-linux" || stdenv.system == "x86_64-linux");
+assert hotplugSupport -> (with stdenv; (system == "i686-linux" || system == "x86_64-linux" || system == "armv6l-linux"));
 
 let
   firmware = gt68xxFirmware { inherit fetchurl; };
