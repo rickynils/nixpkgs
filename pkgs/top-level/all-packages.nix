@@ -7048,6 +7048,9 @@ let
   linux_3_6_rpi = makeOverridable (import ../os-specific/linux/kernel/linux-rpi-3.6.nix) {
     inherit fetchurl stdenv perl buildLinux;
   };
+  linux_3_12_rpi = makeOverridable (import ../os-specific/linux/kernel/linux-rpi-3.12.nix) {
+    inherit fetchurl stdenv perl buildLinux;
+  };
   linux_3_16_rpi = makeOverridable (import ../os-specific/linux/kernel/linux-rpi-3.16.nix) {
     inherit fetchurl stdenv perl buildLinux;
   };
@@ -7208,6 +7211,7 @@ let
   linuxPackages_3_4 = recurseIntoAttrs (linuxPackagesFor pkgs.linux_3_4 linuxPackages_3_4);
   linuxPackages_3_4_apparmor = linuxPackagesFor pkgs.linux_3_4_apparmor linuxPackages_3_4_apparmor;
   linuxPackages_3_6_rpi = linuxPackagesFor pkgs.linux_3_6_rpi linuxPackages_3_6_rpi;
+  linuxPackages_3_12_rpi = recurseIntoAttrs (linuxPackagesFor pkgs.linux_3_12_rpi linuxPackages_3_12_rpi);
   linuxPackages_3_16_rpi = recurseIntoAttrs (linuxPackagesFor pkgs.linux_3_16_rpi linuxPackages_3_16_rpi);
   linuxPackages_3_10 = recurseIntoAttrs (linuxPackagesFor pkgs.linux_3_10 linuxPackages_3_10);
   linuxPackages_3_10_tuxonice = linuxPackagesFor pkgs.linux_3_10_tuxonice linuxPackages_3_10_tuxonice;
