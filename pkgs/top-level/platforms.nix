@@ -203,7 +203,7 @@ rec {
         # Latencytop 
         LATENCYTOP y
       '';
-    kernelTarget = "Image";
+    kernelTarget = "zImage";
     uboot = null;
     gcc = {
       arch = "armv6";

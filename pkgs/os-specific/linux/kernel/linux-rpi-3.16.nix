@@ -14,6 +14,8 @@ in import ./generic.nix (args // rec {
     sha256 = "0bk2cg1vl34dah67q18dvbgs12i4g33shlyq9vf33sq1g42396qd";
   };
 
+  installTargets = [ "zinstall" ];
+
   features.iwlwifi = true;
   features.needsCifsUtils = true;
   features.canDisableNetfilterConntrackHelpers = true;
