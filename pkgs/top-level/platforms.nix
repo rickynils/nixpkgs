@@ -124,6 +124,7 @@ rec {
         KGDB_KDB y
       '';
     kernelTarget = "uImage";
+    kernelInstallTarget = "uinstall";
     uboot = "sheevaplug";
     # Only for uboot = uboot :
     ubootConfig = "sheevaplug_config";
@@ -204,6 +205,7 @@ rec {
         LATENCYTOP y
       '';
     kernelTarget = "zImage";
+    kernelInstallTarget = "zinstall";
     uboot = null;
     gcc = {
       arch = "armv6";
@@ -292,6 +294,7 @@ rec {
   integratorCPuboot = integratorCP // {
     name = "integratorCPuboot";
     kernelTarget = "uImage";
+    kernelInstallTarget = "uinstall";
     uboot = "upstream";
     ubootConfig = "integratorcp_config";
   };
