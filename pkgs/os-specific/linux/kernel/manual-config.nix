@@ -115,8 +115,9 @@ let
       ] ++ (optional isModular "INSTALL_MOD_PATH=$(out)")
       ++ optional installsFirmware "INSTALL_FW_PATH=$(out)/lib/firmware";
 
-      # Some image types need special install targets (e.g. uImage is installed with make uinstall)
-      installTargets = [ (if platform.kernelTarget == "uImage" then "uinstall" else "install") ];
+      installTargets =
+        if (platform ? kernelInstallTarget) then [platform.kernelInstallTarget]
+        else ["install"];
 
       postInstall = optionalString installsFirmware ''
         mkdir -p $out/lib/firmware
