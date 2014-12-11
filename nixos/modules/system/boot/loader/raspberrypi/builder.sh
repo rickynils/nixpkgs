@@ -13,7 +13,8 @@ fi
 
 echo "updating the boot generations directory..."
 
-mkdir -p /boot/old
+outdir=/boot/old
+mkdir -p $outdir || true
 
 # Convert a path to a file in the Nix store such as
 # /nix/store/<hash>-<name>/file to <hash>-<name>-<file>.
@@ -47,10 +48,6 @@ copyForced() {
     mv $dst.tmp $dst
 }
 
-outdir=/boot/old
-mkdir -p $outdir || true
-
-# Copy its kernel and initrd to /boot/kernels.
 addEntry() {
     local path="$1"
     local generation="$2"
@@ -59,27 +56,32 @@ addEntry() {
         return
     fi
 
-    local kernel=$(readlink -f $path/kernel)
-    # local initrd=$(readlink -f $path/initrd)
+    local sysdir=$(readlink -f "$path")
+    local kernel=$sysdir/kernel
+    local initrd=$sysdir/initrd
 
     if test -n "@copyKernels@"; then
         copyToKernelsDir $kernel; kernel=$result
-        # copyToKernelsDir $initrd; initrd=$result
+        copyToKernelsDir $initrd; initrd=$result
     fi
-    
-    echo $(readlink -f $path) > $outdir/$generation-system
-    echo $(readlink -f $path/init) > $outdir/$generation-init
-    cp $path/kernel-params $outdir/$generation-cmdline.txt
-    # echo $initrd > $outdir/$generation-initrd
+
+    echo $sysdir > $outdir/$generation-system
+    echo $sysdir/init > $outdir/$generation-init
+    echo "`cat "$sysdir/kernel-params"` systemConfig=$sysdir init=$sysdir/init" > $outdir/$generation-cmdline.txt
+    echo "initramfs initrd" | cat - "@rpiBootConfig@" > $outdir/$generation-config.txt
+    echo $initrd > $outdir/$generation-initrd
     echo $kernel > $outdir/$generation-kernel
 
-    if test $(readlink -f "$path") = "$default"; then
-      copyForced $kernel /boot/kernel.img
-      # copyForced $initrd /boot/initrd
-      cp "$(readlink -f "$path/init")" /boot/nixos-init
-      echo "`cat $path/kernel-params` init=$path/init" >/boot/cmdline.txt
+    for f in system init cmdline.txt config.txt initrd kernel; do
+      filesCopied[$outdir/$generation-$f]=1
+    done
 
-      echo "$2" > /boot/defaultgeneration
+    if test "$sysdir" = "$default"; then
+      copyForced $kernel /boot/kernel.img
+      copyForced $initrd /boot/initrd
+      copyForced $outdir/$generation-cmdline.txt /boot/cmdline.txt
+      copyForced $outdir/$generation-config.txt /boot/config.txt
+      echo "$generation" > /boot/defaultgeneration
     fi
 }
 
@@ -104,7 +106,7 @@ copyForced $fwdir/start_cd.elf  /boot/start_cd.elf
 copyForced $fwdir/start_x.elf   /boot/start_x.elf
 
 # Remove obsolete files from /boot/old.
-for fn in /boot/old/*linux* /boot/old/*initrd*; do
+for fn in /boot/old/*; do
     if ! test "${filesCopied[$fn]}" = 1; then
         rm -vf -- "$fn"
     fi
