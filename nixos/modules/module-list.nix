@@ -129,6 +129,7 @@
   ./services/logging/logrotate.nix
   ./services/logging/logstash.nix
   ./services/logging/syslogd.nix
+  ./services/logging/syslog-ng.nix
   ./services/logging/rsyslogd.nix
   ./services/mail/dovecot.nix
   ./services/mail/freepops.nix
