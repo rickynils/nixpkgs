@@ -52,8 +52,8 @@ stdenv.mkDerivation {
     ("-" + cross.config);
 
   src = fetchurl {
-    url = http://www.uclibc.org/downloads/snapshots/uClibc-20141029.tar.bz2;
-    sha256 = "018r3bhw1jyyihmm5xxq1psl3r5yx02a57p8qxvay3vvzxn2cvzm";
+    url = http://www.uclibc.org/downloads/snapshots/uClibc-20141216.tar.bz2;
+    sha256 = "0f067vi3d9fxnv1rmacg4nqfikzr9gczvvifgisw8mkshl4ik22s";
   };
 
   # 'ftw' needed to build acl, a coreutils dependency
