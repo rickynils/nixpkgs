@@ -2,7 +2,7 @@
 
 let
 
-  rev = "b82491cb94745a8cac9ac6b79763a8e281ae7add";
+  rev = "549d2c181429cf9767ac3cc79415eaca62442af8";
 
 in import ./generic.nix (args // rec {
   version = "3.12.34";
@@ -10,7 +10,7 @@ in import ./generic.nix (args // rec {
 
   src = fetchurl {
     url = "https://github.com/raspberrypi/linux/archive/${rev}.tar.gz";
-    sha256 = "08yfsl7l388sr5v62ig1yiq006skmwd0s6ss3bhnn68w4pyi1d35";
+    sha256 = "1hbhdnahsszhsbn5xrnr197gp8681800dgxv7vn294zkbz0w13k6";
   };
 
   features.iwlwifi = true;
