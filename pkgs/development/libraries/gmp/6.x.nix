@@ -36,8 +36,10 @@ let self = stdenv.mkDerivation rec {
   # ARM optimization flags via /proc/cpuinfo (and is also
   # broken on multicore CPUs). Avoid this impurity.
   preConfigure = optionalString stdenv.isArm ''
-      configureFlagsArray+=("--build=$(./configfsf.guess)")
-    '';
+    configureFlagsArray+=("--build=$(./configfsf.guess)")
+    substituteInPlace configure.ac --replace softfp soft
+    substituteInPlace configure --replace softfp soft
+  '';
 
   doCheck = true;
 

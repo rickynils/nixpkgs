@@ -14,7 +14,10 @@ stdenv.mkDerivation {
   };
 
   srcAddon = fetchurl {
-    url = "http://www.plugcomputer.org/405/us/plug-basic/uboot/u-boot-3.4.27.zip";
+    urls = [
+      "http://www.plugcomputer.org/405/us/plug-basic/uboot/u-boot-3.4.27.zip"
+      "http://www.quitsq.com/download/SheevaPlug/uboot/src/u-boot-3.4.27.zip"
+    ];
     sha256 = "1wqxznpdb6d2kx58gral4q0mg5ddxyrv7az8c6v29nr3cd9yrfsg";
   };
 
@@ -31,6 +34,7 @@ stdenv.mkDerivation {
     make mrproper
     make rd88f6281Sheevaplug_config NBOOT=1 LE=1
     sed -i /CROSS_COMPILE/d include/config.mk
+    sed -i 's/^-e CPPFLAGS/CPPFLAGS/g' include/config.mk
   '';
 
   buildPhase = ''
