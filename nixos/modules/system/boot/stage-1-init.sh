@@ -329,6 +329,24 @@ mountFS() {
     # Filter out x- options, which busybox doesn't do yet.
     local optionsFiltered="$(IFS=,; for i in $options; do if [ "${i:0:2}" != "x-" ]; then echo -n $i,; fi; done)"
 
+    # Create backing directories for overlayfs
+    if [ "$fsType" = overlay ]; then
+        local optionsOverlay=""
+        local old_IFS=$IFS
+        IFS=,
+        for o in $(echo "$optionsFiltered"); do
+            case $o in
+                lowerdir=* | upperdir=* | workdir=*)
+                    mkdir -m 0755 -p "/mnt-root${o##*=}"
+                    o="${o%=*}=/mnt-root${o##*=}"
+                    ;;
+            esac
+            optionsOverlay="$optionsOverlay${optionsOverlay:+,}$o"
+        done
+        IFS=${old_IFS}
+        optionsFiltered="$optionsOverlay"
+    fi
+
     echo "$device /mnt-root$mountPoint $fsType $optionsFiltered" >> /etc/fstab
 
     checkFS "$device" "$fsType"
